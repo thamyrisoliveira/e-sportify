@@ -1,88 +1,94 @@
 <template>
     <div class="login">
-        <h1>Login</h1>
-        <input
-        type="text"
-        placeholder="Email"
+      <h1>Login</h1>
+      <v-text-field
         v-model="email"
-        >
-        <br>
-        <input
-        type="password"
-        placeholder="Senha"
+        label="Email"
+        outlined
+      ></v-text-field>
+      <v-text-field
         v-model="senha"
+        label="Senha"
+        outlined
+        type="password"
+      ></v-text-field>
+      <div class="btn-login">
+        <v-btn @click="login" color="success" elevation="2">Login</v-btn>
+        <v-btn @click="cancelar" color="primary" elevation="2">Cancelar</v-btn>
+      </div>
+      <v-alert
+          v-if="!showSuccessAlert"
+          type="$success"
+          transition="scale-transition"
+          dismissible
         >
-        <br>
-        <div class="btn-login">
-        <button @click="login">Login</button>
-        </div>
-        <p>
-        Você não tem conta?
-        <span>
-            <router-link to="/registrar">crie uma conta</router-link>
-        </span>
-        </p>
+          {{ successMessage }}
+        </v-alert>
+      <p>
+        Não tem uma conta? <span><router-link to="/registrar">Crie uma conta</router-link></span>
+      </p>
     </div>
-</template>
+  </template>
   
-<script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-  
-export default {
+  <script>
+  import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+    
+  export default {
     name: "login",
-    data () {
-        return {
-        email: '',
-        senha: ''
-        };
+    data() {
+      return {
+        email: "",
+        senha: "",
+        showSuccessAlert: false,
+        successMessage: "",
+      };
     },
     methods: {
-        login: function() {
-            const auth = getAuth();
-            
-            signInWithEmailAndPassword(auth, this.email, this.senha)
-                .then((user) => {
-                    this.$router.replace('/')
-                    alert(`Bem Vindo, ${this.email}`)
-                })
-                .catch((error) => {
-                    alert('Não foi possível realizar o login. ' + error.message)
-                });
-        }
+      login: function() {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, this.email, this.senha)
+          .then((user) => {
+            this.successMessage = `Bem-vindo, ${this.email}`;
+            this.showSuccessAlert = true;
+            this.$router.replace("/homeauth");
+          })
+          .catch((error) => {
+            alert("Não foi possível realizar o login. " + error.message);
+          });
+      },
+      cancelar: function() {
+        this.email = "";
+        this.senha = "";
+      }
     }
-}
-</script>
-
-<style scoped>
-.login {
+  };
+  </script>
+  
+  <style scoped>
+  .login {
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+.btn-login {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between; 
 }
-input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
-}
-
-button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background: #4caf50;
-    border: 0;
-    padding: 15px;
-    color: #ffffff;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
-}
-p {
-    margin-top: 40px;
+  
+  p {
+    margin-top: 20px;
     font-size: 13px;
-}
-p a {
-    text-decoration: underline;
+  }
+  
+  p a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #6C2727;
     cursor: pointer;
-}
- /* eslint-disable */
-</style>
+  }
+  </style>

@@ -1,95 +1,102 @@
 <template>
-    <div class="align-content-center">
-        <p>Crie uma nova conta</p>
-        <input
-        type="text"
-        placeholder="Email"
-        v-model="email"
-        >
-        <br>
-        <input
-        type="password"
-        placeholder="Senha"
-        v-model="senha"
-        >
-        <br>
-        <div>
-        <v-alert
-        v-model="alert"
-        color="success"
-        icon="$success"
-        title="Alert title"
-        dismissible :icon="'mdi-checkbox-marked-circle'"
-      >
-        {{alert_successfull_msg}}
-        </v-alert>
-        </div>
-        <v-btn v-if="!alert" @click="signUp">Registrar</v-btn>
-        <v-btn > Cancelar</v-btn>
-        <span>
-        ou retorne ao
-        <router-link to="/login"> login.</router-link>
-        </span>
+  <div class="sign-up">
+    <h1>Crie uma nova conta</h1>
+    <v-text-field
+      v-model="email"
+      label="Email"
+      outlined
+    ></v-text-field>
+    <v-text-field
+      v-model="senha"
+      label="Senha"
+      outlined
+      type="password"
+    ></v-text-field>
+    <v-alert
+      v-if="alert_error"
+      type="error"
+      transition="scale-transition"
+      dismissible
+    >
+      {{ alert_error_msg }}
+    </v-alert>
+    <div class="btn-register">
+      <v-btn v-if="!alert_success" @click="signUp" color="success">Registrar</v-btn>
+      <v-btn @click="cancelar" color="primary">Cancelar</v-btn>
     </div>
+    <p>
+      Ou retorne ao <router-link to="/login">Login</router-link>
+    </p>
+  </div>
 </template>
-  
+
 <script>
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
-    name: 'signUp',
-    data () {
-      return {
-        email: '',
-        senha: '',
-        alert: false,
-        alert_successfull_msg: "Sua conta foi cadastrada com sucesso!",
-        alert_error_msg: "Aconteceu algo inesperado"
-      };
-    },
-    methods: {
-      signUp () {
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, this.email, this.senha)
+  name: 'signUp',
+  data() {
+    return {
+      email: '',
+      senha: '',
+      alert_success: false,
+      alert_error: false,
+      alert_error_msg: "Aconteceu algo inesperado"
+    };
+  },
+  methods: {
+    signUp() {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, this.email, this.senha)
         .then(() => {
-            this.$router.replace('home'),
-              alert(this.alert_successfull_msg)
+          this.alert_success = true;
+          setTimeout(() => {
+            this.$router.replace('home');
+          }, 3000);
         })
         .catch((error) => {
-            alert(this.alert_error_msg + error.message)
+          this.alert_error = true;
+          this.alert_error_msg = "Erro: " + error.message;
         });
-      },
+    },
+    cancelar() {
+      this.email = "";
+      this.senha = "";
+    }
   }
-  };
-  </script>
-  
-   <style scoped>
-  .sign-up {
-    margin-top: 40px;
-  }
-  input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
-  }
-  button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background: #1606f3;
-    border: 0;
-    padding: 15px;
-    color: #ffffff;
-    font-size: 20px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
-  }
-  span {
-    display: block;
-    margin-top: 20px;
-    font-size: 11px;
-  }
-   /* eslint-disable */
-  </style>
-  
+};
+</script>
+
+<style scoped>
+.sign-up {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+v-text-field {
+  margin: 10px 0;
+  width: 30%;
+}
+
+.btn-register {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between; 
+}
+
+p {
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+p a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #6C2727;
+  cursor: pointer;
+}
+</style>

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import HomeAuth from '../components/HomeAuth'
+import HomeVisitor from '../components/HomeVisitor'
 import HomeView from '../views/HomeView.vue'
-import DetalheView from '../views/DetalheView.vue'
+import LogadoView from '../views/LogadoView.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 import { getAuth } from "firebase/auth"
@@ -11,13 +13,13 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'homevisitor',
+    component: HomeVisitor
   }, 
   {
-    path: '/detalhe',
-    name: 'detalhe',
-    component: DetalheView,
+    path: '/homeauth',
+    name: 'homeauth',
+    component: LogadoView,
     meta: {
       requiresAuth: true
     }

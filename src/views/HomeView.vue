@@ -1,15 +1,15 @@
 <template>
-  <HomeAuth/>
+  <HomeVisitor/>
 </template>
 
 <script>
-  import HomeAuth from '../components/HomeAuth'
+  import HomeVisitor from '@/components/HomeVisitor'
 
   export default {
     name: 'Home',
 
     components: {
-      HomeAuth,
+      HomeVisitor,
     },
   }
 </script>

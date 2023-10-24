@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar dark color="#800e13" title="Menu">
+    <v-toolbar dark color="#6C2727" title="Menu">
       <div class="text-center">
         <v-menu  offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -21,7 +21,7 @@
       <v-text-field hide-details single-line prepend-icon="mdi-magnify">
         <v-tooltip text="Tooltip">
           <template v-slot:activator="{ props }">
-            <v-btn v-bind="props">faça uma busca</v-btn>
+
           </template>
         </v-tooltip>
       </v-text-field>
@@ -40,8 +40,8 @@
       <v-btn icon title="Ver mais">
         <v-icon>mdi-more</v-icon>
       </v-btn>
-      <v-btn icon title="Sair">
-        <v-icon>mdi-login-variant</v-icon>
+      <v-btn icon title="Logout">
+        <v-icon>mdi-account-arrow-right</v-icon>
       </v-btn>
     </v-toolbar>
 
