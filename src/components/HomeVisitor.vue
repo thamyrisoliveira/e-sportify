@@ -14,23 +14,16 @@
 
 
         <v-col class="mb-4">
-          <h1 class="mb-42">
-            Bem-vindo ao E-Sportify
-          </h1>
+          <h1 class="mb-42">E-Sportify</h1>
   
-          <p class="subheading font-weight-regular">
-            Feito por players, para players.
-            <br>Para obter mais informações e recursos, faça login ou registre-se.
+          <p class="subtitulo">by gamers, for gamers
           </p>
         </v-col>
         
         <v-col class="mb-5" cols="12">
-          <h2 class="mb-52">
-            Acesse funcionalidades avançadas
-          </h2>
   
           <v-row justify="center">
-            <v-btn class="btn-registrar" @click="register" color="success"><router-link to="/registrar">Começar agora!</router-link></v-btn>
+            <v-btn class="btn-registrar" @click="register" color="#ff4141"><router-link to="/registrar">Começar agora!</router-link></v-btn>
           </v-row>
         </v-col>
   
@@ -45,12 +38,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Quantico&display=swap');
 
 .btn-registrar{
-  text-decoration: none;
+  text-decoration: none !important;
+  color: white;
 }
 
 *, mb-42, mb-52 {
   font-family: 'Quantico', sans-serif;
   color: white;
+  text-decoration:none !important;
+}
+
+.mb-42 {
+  margin-top: -3rem;
 }
 
 body {
@@ -61,13 +60,18 @@ body {
   background-position: center;
 }
 
-.logoico{
-  margin-right: 20rem;
-  margin-top: 30vh;
+.text-center{
+  margin-left: -70rem;
+  margin-top: 25vh;
   font-size: 1.3rem;
 }
- {
 
+.subtitulo {
+font-size: 1.2rem
+}
+
+.v-application a {
+  color: white !important;
 }
 </style>
 
