@@ -1,6 +1,18 @@
 <template>
     <v-container>
       <v-row class="text-center">
+
+
+        <v-col cols="12" class="logoico">
+          <v-img
+            :src="require('../assets/logo.png')"
+            class="my-3"
+            contain
+            height="200"
+          />
+        </v-col>
+
+
         <v-col class="mb-4">
           <h1 class="mb-42">
             Bem-vindo ao E-Sportify
@@ -22,14 +34,7 @@
           </v-row>
         </v-col>
   
-        <v-col cols="12">
-          <v-img
-            :src="require('../assets/logo.png')"
-            class="my-3"
-            contain
-            height="200"
-          />
-        </v-col>
+
 
       </v-row>
     </v-container>
@@ -55,12 +60,15 @@ body {
   background-attachment: fixed;
   background-position: center;
 }
-.mb-4{
-  margin-left: 45rem;
-  margin-top: 12rem;
+
+.logoico{
+  margin-right: 20rem;
+  margin-top: 30vh;
   font-size: 1.3rem;
 }
+ {
 
+}
 </style>
 
 
