@@ -1,8 +1,6 @@
 <template>
     <v-container>
       <v-row class="text-center">
-
-
         <v-col cols="12" class="logoico">
           <v-img
             :src="require('../assets/logo.png')"
@@ -11,24 +9,16 @@
             height="200"
           />
         </v-col>
-
-
         <v-col class="mb-4">
           <h1 class="mb-42">E-Sportify</h1>
-  
           <p class="subtitulo">by gamers, for gamers
           </p>
         </v-col>
-        
         <v-col class="mb-5" cols="12">
-  
           <v-row justify="center">
             <v-btn class="btn-registrar" @click="register" color="#ff4141"><router-link to="/registrar">Começar agora!</router-link></v-btn>
           </v-row>
         </v-col>
-  
-
-
       </v-row>
     </v-container>
   </template>
@@ -42,11 +32,19 @@
   color: white;
 }
 
+.container {
+  margin-left: -10rem;
+  margin-top: 9rem;
+  overflow: hidden;
+}
+
+
 *, mb-42, mb-52 {
   font-family: 'Quantico', sans-serif;
   color: white;
   text-decoration:none !important;
 }
+
 
 .mb-42 {
   margin-top: -3rem;
@@ -60,11 +58,7 @@ body {
   background-position: center;
 }
 
-.text-center{
-  margin-left: -70rem;
-  margin-top: 25vh;
-  font-size: 1.3rem;
-}
+
 
 .subtitulo {
 font-size: 1.2rem
