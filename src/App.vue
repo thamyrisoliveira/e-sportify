@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-toolbar dark color="#6C2727" title="Menu">
+  <v-app  style="background-color: hsla(0, 0%, 0%, 0)">
+    <v-toolbar dark color="#FF4141" title="Menu">
       <div class="text-center">
         <v-menu  offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -51,6 +51,17 @@
   </v-app>
 </template>
 
+
+<style>
+.v-toolbar {
+flex: none;
+}
+
+</style> 
+
+
+
+
 <script>
 
 export default {
@@ -66,11 +77,9 @@ export default {
   })
 };
 </script>
-<style>
-.v-toolbar {
-flex: none;
-}
 
-</style> 
+
+
+
 
 

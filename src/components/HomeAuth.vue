@@ -18,7 +18,7 @@
         </h2>
 
         <v-row justify="center">
-          <v-btn @click="register" color="success">Começar agora!</v-btn>
+          <v-btn @click="register" color="">Começar agora!</v-btn>
         </v-row>
       </v-col>
 
@@ -34,6 +34,13 @@
     </v-row>
   </v-container>
 </template>
+<style>
+body {
+  background-color: #101010;
+}
+
+
+</style>
 
 <script>
 export default {
@@ -49,4 +56,5 @@ export default {
     },
   }
 }
+
 </script>
