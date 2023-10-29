@@ -15,7 +15,7 @@
           </v-list>
         </v-menu>
       </div>
-
+ 
       <v-toolbar-title>E-Sportify</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field hide-details single-line prepend-icon="mdi-magnify">
