@@ -66,7 +66,7 @@
   
   <style scoped>
   .login {
-    margin-top: 40px;
+    margin-top: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,7 +77,7 @@
   margin-top: 20px;
   display: flex;
   flex-direction: row; 
-  justify-content: space-between; 
+  justify-content: space-between;
 }
   
   p {
@@ -88,7 +88,7 @@
   p a {
     text-decoration: none;
     font-weight: bold;
-    color: #6C2727;
+    color: #616c27;
     cursor: pointer;
   }
   </style>
