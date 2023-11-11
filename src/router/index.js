@@ -6,6 +6,7 @@ import HomeView from '../views/HomeView.vue'
 import LogadoView from '../views/LogadoView.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
+import homee from '../views/homee.vue'
 import { getAuth } from "firebase/auth"
 
 Vue.use(VueRouter)
@@ -40,6 +41,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/homee',
+    name: 'homee',
+    component: homee
   },
 ]
 

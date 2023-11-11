@@ -50,13 +50,13 @@
   margin-top: -3rem;
 }
 
-body {
+/* body { 
   background-image: url('/src/assets/bg.jpg'); 
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-}
+} */
 
 
 
