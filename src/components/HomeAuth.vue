@@ -53,7 +53,6 @@ export default {
           caption: 'Imagem 3',
           color: 'info',
         },
-        // Adicione mais itens semelhantes conforme necessário
       ],
     };
   },
