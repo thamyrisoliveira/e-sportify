@@ -1,6 +1,57 @@
 <template>
-    <div>
-      <h1>Nosso objetivo é criar um espaço único e acessível onde jogadores profissionais de PUBG possam exibir suas habilidades, encontrar oportunidades de crescimento e se conectar com organizações de esports dispostas a investir no seu potencial. Queremos ser a plataforma definitiva que molda o futuro dos esports no universo do PUBG.</h1>
-      <h1> Conecte-se com os melhores jogadores e organizações de esports.</h1>
+  <div class="about-container">
+    <div class="about-content">
+      <h1>E-sportify</h1>
+      <p>Somos mais do que uma plataforma; somos uma comunidade apaixonada que acredita no potencial extraordinário dos jogadores profissionais de PUBG. Nosso objetivo é transcender o comum, criando um espaço único e acessível onde os talentos se destacam e as oportunidades surgem.</p>
+      <p>Conectamos jogadores dedicados a organizações de esports comprometidas em investir no futuro vitorioso.</p>
     </div>
-  </template>
+    <div class="about-image">
+      <img src="img.png">
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'AboutView',
+};
+</script>
+
+<style scoped>
+.about-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 50px;
+}
+
+.about-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.about-content h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.about-image {
+  flex: 1;
+  max-width: 400px;
+  margin-left: 50px;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+</style>
