@@ -18,7 +18,7 @@
 
       <v-toolbar-title>E-Sportify</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-text-field hide-details single-line prepend-icon="mdi-magnify">
+      <v-text-field hide-details single-line prepend-icon="mdi-magnify" v-on:keyup.enter="buscar">
         <v-tooltip text="Tooltip">
           <template v-slot:activator="{ props }">
 
@@ -40,7 +40,7 @@
       <v-btn icon title="Ver mais">
         <v-icon>mdi-more</v-icon>
       </v-btn>
-      <v-btn icon title="Logout">
+      <v-btn icon title="Logout" @click="signout">
         <v-icon>mdi-account-arrow-right</v-icon>
       </v-btn>
     </v-toolbar>
@@ -51,35 +51,44 @@
   </v-app>
 </template>
 
-
-<style>
-.v-toolbar {
-flex: none;
-}
-
-</style> 
-
-
-
-
 <script>
+
+import usuarioService from '@/service/usuario'
+import { getAuth, signOut } from "firebase/auth";
 
 export default {
   name: 'App',
 
   data: () => ({
     items: [
-      { title: 'Click Me' },
+      { title: 'Criar Usuario' },
       { title: 'Click Me' },
       { title: 'Click Me' },
       { title: 'Click Me 2' },
     ],
-  })
+  }),
+  methods: {
+    buscar(evt) {
+      console.log(evt.target.value)
+      usuarioService.buscarPorNome(evt.target.value)
+    },
+    signout() {
+      const auth = getAuth();
+      signOut(auth).then(() => {
+        setTimeout(() => {
+                this.$router.replace('login');
+              }, 2000);
+      })
+    }
+  }
 };
 </script>
 
-
-
-
-
-
+<style>
+.v-toolbar {
+flex: none;
+}
+.v-list-item__title {
+  color: red
+}
+</style> 

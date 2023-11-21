@@ -3,7 +3,7 @@
     <v-row class="text-center">
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">
-          Bem-vindo user x
+          Bem-vindo {{ usuario.nome }}
         </h1>
 
         <p class="subheading font-weight-regular">
@@ -13,24 +13,8 @@
       </v-col>
       
       <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3">
-          aqui vai um card com o perfil do usuário
-        </h2>
-
-        <v-row justify="center">
-          <v-btn @click="register" color="">Começar agora!</v-btn>
-        </v-row>
+        <player-card />
       </v-col>
-
-      <!-- <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col> -->
-
     </v-row>
   </v-container>
 </template>
@@ -43,8 +27,19 @@ body {
 </style>
 
 <script>
+import { mapState } from "vuex";
+import PlayerCard from "@/components/PlayerCard.vue"
+
 export default {
   name: 'HomeAuth',
+  components: {PlayerCard},
+  computed: {
+      ...mapState({
+          usuario: (state) => { 
+            return state.main.usuario
+          },
+      }),
+  },
   methods: {
     login() {
       // Redirecionar para a página de login

@@ -33,7 +33,6 @@
 }
 
 .container {
-  margin-left: -10rem;
   margin-top: 9rem;
   overflow: hidden;
 }
