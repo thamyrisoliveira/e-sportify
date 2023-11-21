@@ -1,9 +1,14 @@
 import App from './App.vue'
 import router from './router'
+import store from './store'
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore } from 'firebase/firestore/lite';
 import Vue from 'vue';
 import vuetify from './plugins/vuetify'
+import VueTheMask from 'vue-the-mask'
+
+Vue.use(VueTheMask)
 
 Vue.config.productionTip = false;
 
@@ -20,13 +25,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+
+const database = getFirestore(firebaseApp);
 
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   app = new Vue({
     router,
     vuetify,
+    store,
     render: h => h(App)
   }).$mount('#app');
 });

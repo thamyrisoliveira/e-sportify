@@ -16,14 +16,6 @@
         <v-btn @click="login" color="success" elevation="2">Login</v-btn>
         <v-btn @click="cancelar" color="primary" elevation="2">Cancelar</v-btn>
       </div>
-      <v-alert
-          v-if="!showSuccessAlert"
-          type="$success"
-          transition="scale-transition"
-          dismissible
-        >
-          {{ successMessage }}
-        </v-alert>
       <p>
         Não tem uma conta? <span><router-link to="/registrar">Crie uma conta</router-link></span>
       </p>
@@ -31,8 +23,8 @@
   </template>
   
   <script>
-  import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-    
+  import { mapState } from "vuex";
+
   export default {
     name: "login",
     data() {
@@ -43,18 +35,28 @@
         successMessage: "",
       };
     },
+    computed: {
+        ...mapState({
+            usuario: (state) => state.main.usuario,
+        }),
+    },
     methods: {
       login: function() {
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, this.email, this.senha)
-          .then((user) => {
-            this.successMessage = `Bem-vindo, ${this.email}`;
-            this.showSuccessAlert = true;
-            this.$router.replace("/homeauth");
-          })
-          .catch((error) => {
-            alert("Não foi possível realizar o login. " + error.message);
-          });
+        let payload = {
+          usuario: {email: this.email, senha: this.senha},
+          router: this.$router
+        }
+        this.$store.dispatch("main/autenticar", payload)
+        // const auth = getAuth();
+        // signInWithEmailAndPassword(auth, this.email, this.senha)
+        //   .then((user) => {
+        //     this.successMessage = `Bem-vindo, ${this.email}`;
+        //     this.showSuccessAlert = true;
+        //     this.$router.replace("/homeauth");
+        //   })
+        //   .catch((error) => {
+        //     alert("Não foi possível realizar o login. " + error.message);
+        //   });
       },
       cancelar: function() {
         this.email = "";
