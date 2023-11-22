@@ -9,6 +9,7 @@ import SignUp from '../views/SignUp.vue'
 import EditarPerfilView from "../views/EditarPerfilView.vue"
 import CriarUsuarioView from "../views/CriarUsuarioView.vue"
 import EquipeView from "../views/EquipeView.vue"
+import EditarEquipeView from "../views/EditarEquipeView.vue"
 import { getAuth } from "firebase/auth"
 
 Vue.use(VueRouter)
@@ -59,6 +60,11 @@ const routes = [
     name: 'equipes',
     component: EquipeView
   },
+  {
+    path: '/editar-equipe',
+    name: 'editar-equipe',
+    component: EditarEquipeView
+  }
 ]
 
 const router = new VueRouter({

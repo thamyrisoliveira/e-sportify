@@ -19,6 +19,7 @@ const initialState = {
     jogadores: [],
     gerentes: [],
     equipes: [],
+    jogadoresEquipeSelecionada: [],
 }
 
 const state = () => ({
@@ -46,6 +47,9 @@ const mutations = {
     },
     setJogadorList: function (state, jogadores) {
         state.jogadores = jogadores
+    },
+    setJogadoresEquipeSelecionada: function(state, jogadoresEquipeSelecionada) {
+        state.jogadoresEquipeSelecionada = jogadoresEquipeSelecionada
     },
     setEquipe: function (state, equipe) {
         state.equipe = equipe
@@ -138,12 +142,30 @@ const actions = {
             commit("setLoading", false)
         })
     },
+    carregaJogadoresEquipe: function({commit}, equipe) {
+        EquipeService.carregaJogadoresEquipe(equipe)
+            .then(jogadores => {
+                commit("setJogadoresEquipeSelecionada", jogadores)
+            })
+            .catch(err => console.log(err))
+    },
     salvarEquipe: function({commit, dispatch}, payload) {
         commit("setLoading", true)
         EquipeService.salvar(payload).then((equipe) => {
             commit("setEquipe", equipe)
             dispatch('listaEquipes')
             commit('resetEquipe')
+        })
+        .catch((error) => {
+            console.log("An erro occurred while tried to authenticate.", error)
+        })
+        .finally(()=>{
+            commit("setLoading", false)
+        })
+    },
+    atualizaEquipe: function({commit, dispatch}, payload) {
+        commit("setLoading", true)
+        EquipeService.atualizar(payload).then(() => {
         })
         .catch((error) => {
             console.log("An erro occurred while tried to authenticate.", error)

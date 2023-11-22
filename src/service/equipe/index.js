@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc, getDocs, setDoc, doc, query, where } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc, doc, query, where, updateDoc} from 'firebase/firestore/lite';
 
 const salvar = async (equipe) => {
     try {
@@ -17,10 +17,13 @@ const salvar = async (equipe) => {
 
 const atualizar = async (equipe) => {
     try {
-        const docRef = await setDoc(doc(getFirestore(), "usuarios", equipe.id), equipe);
+        let document = {
+            membros: equipe.membros.map(membro => doc(getFirestore(), "usuarios", membro.id))
+        }
+        const docRef = await updateDoc(doc(getFirestore(), "equipes", equipe.id), document);
         return document
     } catch (e) {
-        console.error("Error adding document: ", e);
+        console.error("Error updating document: ", e);
     }
 }
 
@@ -39,8 +42,21 @@ const listar = async () => {
     return equipes
 }
 
+const carregaJogadoresEquipe = async (equipe) => {
+    let jogadores = [];
+    equipe.membros.forEach(async(ref) => {
+        const docSnap = await getDoc(ref);
+
+        if (docSnap.exists()) {
+            jogadores.push(docSnap.data())
+        }
+    })
+    return jogadores
+}
+
 export default {
     salvar: salvar,
     listar: listar,
     atualizar: atualizar,
+    carregaJogadoresEquipe: carregaJogadoresEquipe
 }

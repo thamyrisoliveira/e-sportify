@@ -18,8 +18,8 @@
             <v-list-item to="/equipes">
               <v-list-item-title>Equipes</v-list-item-title>
             </v-list-item>
-            <v-list-item to="/adicionar-player">
-              <v-list-item-title>Adicionar Jogador no Time</v-list-item-title>
+            <v-list-item to="/editar-equipe">
+              <v-list-item-title>Gerenciar Equipe</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
