@@ -1,10 +1,24 @@
 import UsuarioService from "@/service/usuario";
+import EquipeService from "@/service/equipe";
 import { getAuth } from "firebase/auth";
+
+const initialEquipeState = {
+    nome: '',
+    manager: null,
+    membros: [],
+}
 
 const initialState = {
     loading: false,
     usuario: null,
+    equipe: {
+        ...initialEquipeState
+    },
     editar: false,
+    usuarios: [],
+    jogadores: [],
+    gerentes: [],
+    equipes: [],
 }
 
 const state = () => ({
@@ -15,11 +29,29 @@ const mutations = {
     reset: function(state) {
         state = {...initialState}
     },
+    resetEquipe: function(state) {
+        state.equipe = initialEquipeState
+    },
     setLoading: function (state, loading) {
         state.loading = loading
     },
     setUsuario: function (state, usuario) {
         state.usuario = usuario
+    },
+    setUsuarios: function (state, usuarios) {
+        state.usuarios = usuarios
+    },
+    setGerenteList: function (state, gerentes) {
+        state.gerentes = gerentes
+    },
+    setJogadorList: function (state, jogadores) {
+        state.jogadores = jogadores
+    },
+    setEquipe: function (state, equipe) {
+        state.equipe = equipe
+    },
+    setEquipes: function (state, equipes) {
+        state.equipes = equipes
     },
     setEditar: function(state, editar) {
         state.editar = editar
@@ -64,7 +96,7 @@ const actions = {
     },
     carregaPerfil: function({commit}) {
         let auth = getAuth()
-        UsuarioService.getUsuarioProfile(auth.user.uid)
+        UsuarioService.getUsuarioProfile(auth.currentUser.uid)
                     .then(usuario => {
                         commit("setUsuario", usuario)
                     })
@@ -73,6 +105,7 @@ const actions = {
         commit("setLoading", true)
         UsuarioService.salvar(payload).then((usuario) => {
             commit("setUsuario", usuario)
+            commit("setEditar", false)
         })
         .catch((error) => {
             console.log("An erro occurred while tried to authenticate.", error)
@@ -80,7 +113,57 @@ const actions = {
         .finally(()=>{
             commit("setLoading", false)
         })
-    }
+    },
+    buscarUsuarios: function({commit}, nome) {
+        commit("setLoading", true)
+        UsuarioService.buscarPorNome(nome).then((usuarios) => {
+            commit("setUsuarios", usuarios)
+        })
+        .catch((error) => {
+            console.log("An erro occurred while tried to authenticate.", error)
+        })
+        .finally(()=>{
+            commit("setLoading", false)
+        })
+    },
+    listaUsuarios: function({commit}, perfil) {
+        commit("setLoading", true)
+        UsuarioService.listar(perfil).then((usuarios) => {
+            commit("set"+perfil+'List', usuarios)
+        })
+        .catch((error) => {
+            console.log("An erro occurred while tried to authenticate.", error)
+        })
+        .finally(()=>{
+            commit("setLoading", false)
+        })
+    },
+    salvarEquipe: function({commit, dispatch}, payload) {
+        commit("setLoading", true)
+        EquipeService.salvar(payload).then((equipe) => {
+            commit("setEquipe", equipe)
+            dispatch('listaEquipes')
+            commit('resetEquipe')
+        })
+        .catch((error) => {
+            console.log("An erro occurred while tried to authenticate.", error)
+        })
+        .finally(()=>{
+            commit("setLoading", false)
+        })
+    },
+    listaEquipes: function({commit}) {
+        commit("setLoading", true)
+        EquipeService.listar().then((equipes) => {
+            commit("setEquipes", equipes)
+        })
+        .catch((error) => {
+            console.log("An erro occurred while tried to authenticate.", error)
+        })
+        .finally(()=>{
+            commit("setLoading", false)
+        })
+    },
 }
 
 export default {

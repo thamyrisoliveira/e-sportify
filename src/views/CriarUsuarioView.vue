@@ -23,32 +23,10 @@
         outlined
       ></v-text-field>
       <v-text-field
-        v-model="usuario.cpf"  
-        label="CPF"
-        :rules="rules.cpf"
-        required
-        outlined
-        v-mask="'###.###.###-##'"
-      />
-      <v-text-field
         v-model="usuario.email"
         :rules="rules.email"
         label="Email"
         outlined
-      ></v-text-field>
-      <v-text-field
-        v-model="usuario.senha"
-        label="Senha"
-        :rules="rules.senha"
-        outlined
-        type="password"
-      ></v-text-field>
-      <v-text-field
-        v-model="usuario.confirmaSenha"
-        label="Insira a senha novamente"
-        :rules="[(value) => rules.confirmaSenha(usuario.senha, value)]"
-        outlined
-        type="password"
       ></v-text-field>
       <v-alert
         v-if="alert_error"
@@ -59,23 +37,18 @@
         {{ alert_error_msg }}
       </v-alert>
       <div class="btn-register">
-        <v-btn v-if="!alert_success" @click="signUp" color="success">Registrar</v-btn>
-        <v-btn @click="cancelar" color="primary">Cancelar</v-btn>
+        <v-btn v-if="!alert_success" @click="criarUsuario" color="success">Registrar</v-btn>
       </div>
-      <p>
-        Ou retorne ao <router-link to="/login">Login</router-link>
-      </p>
     </v-form>
   </div>
     
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
 import usuarioService from "@/service/usuario"
-import { validarCPF } from "@/helper"
 export default {
-  name: 'signUp',
+  name: 'CriaUsurioView',
   data() {
     return {
       usuario:{
@@ -97,20 +70,10 @@ export default {
         nome: [
           value => !!value || "Nome é obrigatório"
         ],
-        cpf: [
-          (value) => !!value || "CPF é obrigatório",
-          (value) => validarCPF(value) || "CPF inválido",
-        ],
         email: [
           value => !!value || "Email é obrigatório",
           value => /.+@.+/.test(value) || 'E-mail inválido'
         ],
-        senha: [
-          value => !!value || "Senha é obrigatória"
-        ],
-        confirmaSenha: (senha, confirmacao) => {
-          return senha == confirmacao  || 'Senha diferente da confirmação'
-        },
       },
       perfis: ['Jogador', 'Equipe', 'Treinador', 'Gerente', 'CEO'],
       alert_success: false,
@@ -119,34 +82,33 @@ export default {
     }
   },
   methods: {
-    signUp() {
+    criarUsuario() {
       if (this.$refs.form.validate()) {
-        const existe = usuarioService.existeCPF(this.usuario.cpf).then(existe => {
-          if (existe) {
+        const actionCodeSettings = {
+          url: 'http://localhost:8080',
+          handleCodeInApp: true,
+        };
+        const auth = getAuth();
+        sendSignInLinkToEmail(auth, this.usuario.email, actionCodeSettings)
+          .then(() => {
+            this.usuario.uid = auth.currentUser.uid;
+            this.completo = false;
+            usuarioService.salvar(this.usuario)
+            this.alert_success = true;
+            setTimeout(() => {
+              usuarioService.getUsuarioProfile(auth.currentUser.uid)
+                  .then(profile => {
+                    profile.uid = auth.currentUser.uid
+                      this.$store.commit("main/setUsuario", profile)
+                  })
+            }, 1000);
+          })
+          .catch((error) => {
             this.alert_error = true;
-            this.alert_error_msg = "Já existe usuário com este CPF";
-            return
-          }
-          const auth = getAuth();
-          createUserWithEmailAndPassword(auth, this.usuario.email, this.usuario.senha)
-            .then(() => {
-              this.usuario.id = auth.currentUser.uid;
-              this.completo = false;
-              usuarioService.salvar(this.usuario).then(profile => {
-                this.$store.commit("main/setUsuario", profile)
-                setTimeout(() => {
-                  this.$router.replace("/homeauth");
-                }, 1000);
-              })
-              this.alert_success = true;
-            })
-            .catch((error) => {
-              this.alert_error = true;
-              this.alert_error_msg = "Erro: " + error.message;
-            });
-        })
-        
+            this.alert_error_msg = "Erro: " + error.message;
+          });
       }
+        
     },
     cancelar() {
       this.email = "";

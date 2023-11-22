@@ -4,7 +4,9 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const salvar = async (usuario) => {
     try {
         let document = {
+            id: usuario.id ? usuario.id : null,
             nome: usuario.nome,
+            nickname: usuario.nickname,
             perfil: usuario.perfil,
             email: usuario.email,
             cpf: usuario.cpf,
@@ -13,11 +15,22 @@ const salvar = async (usuario) => {
             experiencias: usuario.experiencias,
             completo: usuario.completo
         }
-        const docRef = await setDoc(doc(getFirestore(), "usuarios", usuario.uid), document);
+        const docRef = await setDoc(doc(getFirestore(), "usuarios", usuario.id), document);
         return document
     } catch (e) {
         console.error("Error adding document: ", e);
     }
+}
+
+const listar = async (perfil) => {
+    let usuarios = [];
+    const docRef = collection(getFirestore(), "usuarios");
+    const q = query(docRef, where("perfil", "==", perfil));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        usuarios.push(doc.data())
+    });
+    return usuarios
 }
 
 const existeCPF = async (cpf) => {
@@ -54,6 +67,7 @@ const autenticar = async (usuario) => {
 
 export default {
     salvar: salvar,
+    listar: listar,
     existeCPF: existeCPF,
     buscarPorNome: buscarPorNome,
     getUsuarioProfile: getUsuarioProfile,

@@ -5,6 +5,7 @@
         :label="label"
         v-model="dataFormatada"
         v-mask="'##/##/####'"
+        :disabled="disabled"
         ref="datePicker"
         validate-on-blur>
         <template v-slot:prepend-inner>
@@ -38,14 +39,18 @@ import moment from "moment";
 export default {
     name: "DatePicker",
     props: {
-        dataModelProp: null, 
+        dataModel: null, 
         label: {
             type: String,
             default: ''
         },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
     },
     data() {
-        return {dataMenu: false, dataModel: this.dataModelProp}
+        return {dataMenu: false}
     },
     computed: {
         dataFormatada: {

@@ -12,8 +12,8 @@
         </p>
       </v-col>
       
-      <v-col class="mb-5" cols="12">
-        <player-card />
+      <v-col class="mb-5" cols="12" v-if="!usuario.completo">
+        <editar-perfil-card />
       </v-col>
     </v-row>
   </v-container>
@@ -28,17 +28,20 @@ body {
 
 <script>
 import { mapState } from "vuex";
-import PlayerCard from "@/components/PlayerCard.vue"
+import EditarPerfilCard from "@/components/EditarPerfilCard.vue"
 
 export default {
   name: 'HomeAuth',
-  components: {PlayerCard},
+  components: {EditarPerfilCard},
   computed: {
       ...mapState({
           usuario: (state) => { 
             return state.main.usuario
           },
       }),
+  },
+  beforeCreate() {
+    this.$store.dispatch('main/carregaPerfil')
   },
   methods: {
     login() {

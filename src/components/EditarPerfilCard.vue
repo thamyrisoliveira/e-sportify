@@ -31,7 +31,10 @@
                         outlined
                         :disabled="!editar"
                         ></v-combobox>
-                    <v-btn @click="adicionarExperiencia">Adicionar Experiência</v-btn>
+                    <v-btn @click="adicionarExperiencia" v-if="editar">Adicionar Experiência</v-btn>
+                    <span v-else class="white--text text-center">
+                        Experiências
+                    </span>
                     <div class="mt-4" v-for="experiencia in usuario.experiencias" :key="experiencia.id">
                         <v-card class="card-xp-color" >
                             <v-card-text>
@@ -102,7 +105,7 @@ import { mapState } from "vuex";
 import DatePicker from "@/components/DatePicker";
 
 export default {
-  name: 'PerfilCard',
+  name: 'EditarPerfilCard',
   components: {DatePicker},
   data: () => ({
     resumo: "",
@@ -114,6 +117,9 @@ export default {
           usuario: (state) => state.main.usuario,
           editar: (state) => state.main.editar
       }),
+  },
+  beforeCreate() {
+    this.$store.dispatch('main/carregaPerfil')
   },
   methods: {
     iniciarEdicao() {
@@ -133,7 +139,6 @@ export default {
             ...this.usuario,
             completo: true
         }
-        console.log(usuario)
         this.$store.dispatch('main/salvar', usuario)
     }
   }

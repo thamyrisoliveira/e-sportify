@@ -47,16 +47,6 @@
           router: this.$router
         }
         this.$store.dispatch("main/autenticar", payload)
-        // const auth = getAuth();
-        // signInWithEmailAndPassword(auth, this.email, this.senha)
-        //   .then((user) => {
-        //     this.successMessage = `Bem-vindo, ${this.email}`;
-        //     this.showSuccessAlert = true;
-        //     this.$router.replace("/homeauth");
-        //   })
-        //   .catch((error) => {
-        //     alert("Não foi possível realizar o login. " + error.message);
-        //   });
       },
       cancelar: function() {
         this.email = "";

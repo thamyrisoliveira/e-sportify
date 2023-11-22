@@ -9,8 +9,17 @@
             </v-app-bar-nav-icon>
           </template>
           <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item to="/editar-perfil">
+              <v-list-item-title >Editar Perfil</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/criar-usuario">
+              <v-list-item-title>Criar Usuario</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/equipes">
+              <v-list-item-title>Equipes</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/adicionar-player">
+              <v-list-item-title>Adicionar Jogador no Time</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -60,16 +69,9 @@ export default {
   name: 'App',
 
   data: () => ({
-    items: [
-      { title: 'Criar Usuario' },
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me 2' },
-    ],
   }),
   methods: {
     buscar(evt) {
-      console.log(evt.target.value)
       usuarioService.buscarPorNome(evt.target.value)
     },
     signout() {
@@ -77,7 +79,7 @@ export default {
       signOut(auth).then(() => {
         setTimeout(() => {
                 this.$router.replace('login');
-              }, 2000);
+              }, 1000);
       })
     }
   }

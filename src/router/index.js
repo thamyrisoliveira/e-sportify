@@ -6,6 +6,9 @@ import HomeView from '../views/HomeView.vue'
 import LogadoView from '../views/LogadoView.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
+import EditarPerfilView from "../views/EditarPerfilView.vue"
+import CriarUsuarioView from "../views/CriarUsuarioView.vue"
+import EquipeView from "../views/EquipeView.vue"
 import { getAuth } from "firebase/auth"
 
 Vue.use(VueRouter)
@@ -40,6 +43,21 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/editar-perfil',
+    name: 'editar-perfil',
+    component: EditarPerfilView
+  },
+  {
+    path: '/criar-usuario',
+    name: 'criar-usuario',
+    component: CriarUsuarioView
+  },
+  {
+    path: '/equipes',
+    name: 'equipes',
+    component: EquipeView
   },
 ]
 
