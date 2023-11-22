@@ -1,6 +1,11 @@
 <template>
     <v-container>
-      <v-row class="text-center">
+      <v-row v-if="usuariosEncontrados.length > 0">
+        <v-col v-for="usuario in usuariosEncontrados" :key="usuario.id">
+          <user-card :usuario="usuario" />
+        </v-col>
+      </v-row>
+      <v-row v-else class="text-center">
         <v-col cols="12" class="logoico">
           <v-img
             :src="require('../assets/logo.png')"
@@ -8,6 +13,8 @@
             contain
             height="200"
           />
+        </v-col>
+        <v-col>
         </v-col>
         <v-col class="mb-4">
           <h1 class="mb-42">E-Sportify</h1>
@@ -71,18 +78,16 @@ font-size: 1.2rem
 
 
 <script>
+import { mapState } from "vuex";
+import UserCard from "./UserCard.vue"
+
 export default {
   name: 'HomeVisitor',
-  methods: {  methods: {
-  login() {
-    // Redirecionar para a página de login
-    this.$router.push('/login');
+  components: {UserCard},
+  computed: {
+      ...mapState({
+          usuariosEncontrados: (state) => state.main.usuariosEncontrados,
+      }),
   },
-  register() {
-    // Redirecionar para a página de registro
-    this.$router.push('/registrar');
-  },
-}
-}
 }
 </script>

@@ -62,7 +62,6 @@
 
 <script>
 
-import usuarioService from '@/service/usuario'
 import { getAuth, signOut } from "firebase/auth";
 
 export default {
@@ -72,7 +71,7 @@ export default {
   }),
   methods: {
     buscar(evt) {
-      usuarioService.buscarPorNome(evt.target.value)
+      this.$store.dispatch('main/buscarUsuarios', evt.target.value)
     },
     signout() {
       const auth = getAuth();

@@ -15,6 +15,7 @@ const initialState = {
         ...initialEquipeState
     },
     editar: false,
+    usuariosEncontrados: [],
     usuarios: [],
     jogadores: [],
     gerentes: [],
@@ -38,6 +39,9 @@ const mutations = {
     },
     setUsuario: function (state, usuario) {
         state.usuario = usuario
+    },
+    setUsuariosEncontrados: function (state, usuarios) {
+        state.usuariosEncontrados = usuarios
     },
     setUsuarios: function (state, usuarios) {
         state.usuarios = usuarios
@@ -121,7 +125,7 @@ const actions = {
     buscarUsuarios: function({commit}, nome) {
         commit("setLoading", true)
         UsuarioService.buscarPorNome(nome).then((usuarios) => {
-            commit("setUsuarios", usuarios)
+            commit("setUsuariosEncontrados", usuarios)
         })
         .catch((error) => {
             console.log("An erro occurred while tried to authenticate.", error)
